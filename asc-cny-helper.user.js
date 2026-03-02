@@ -293,6 +293,11 @@
     const shifted = shift24hTime(out, node);
     if (shifted) out = shifted;
 
+    // 汉化常见英文文本
+    out = out.replace(/Previous 24 Hours/g, "过去24小时");
+    out = out.replace(/Previous 7 Days/g, "过去7天");
+    out = out.replace(/Previous 30 Days/g, "过去30天");
+
     if (out !== cur) node.nodeValue = out;
   }
 
