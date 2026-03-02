@@ -251,7 +251,8 @@
     const isYAxisNumber = isRevenueChartYAxis(node) && /^\s*[0-9]+(?:\.[0-9]+)?\s*$/.test(cur);
     const hasTimePattern = /\b\d{1,2}:\d{2}\b/.test(cur);
     const hasAmPmPattern = /\d{1,2}\s*[ap]\.?m\.?/i.test(cur);
-    if (!cur.includes("$") && !/[KMB]\b/.test(cur) && !hasAmPmPattern && !hasDatePattern && !isYAxisNumber && !hasTimePattern) return;
+    const hasPreviousPattern = /Previous\s+\d+\s+(Hours|Days)/i.test(cur);
+    if (!cur.includes("$") && !/[KMB]\b/.test(cur) && !hasAmPmPattern && !hasDatePattern && !isYAxisNumber && !hasTimePattern && !hasPreviousPattern) return;
 
     if (!origText.has(node)) origText.set(node, cur);
     const orig = origText.get(node);
