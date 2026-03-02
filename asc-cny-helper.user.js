@@ -96,14 +96,14 @@
 
   function ampmTo24h(text) {
     if (!CFG.enable24hAxis || !text) return null;
-    const re = /\b(\d{1,2})\s*(a\.?m\.?|p\.?m\.?)\b/i;
+    const re = /(\d{1,2})\s*([ap])\.?m\.?/i;
     const m = text.match(re);
     if (!m) return null;
 
     let h = parseInt(m[1], 10);
-    const ap = m[2].toLowerCase().startsWith("p") ? "pm" : "am";
-    if (ap === "pm" && h !== 12) h += 12;
-    if (ap === "am" && h === 12) h = 0;
+    const ap = m[2].toLowerCase();
+    if (ap === "p" && h !== 12) h += 12;
+    if (ap === "a" && h === 12) h = 0;
     h = (h + 8) % 24;
 
     return text.replace(re, `${String(h).padStart(2, "0")}:00`);
@@ -245,7 +245,8 @@
     const hasDatePattern = /\b[A-Za-z]{3,4}\s+\d{1,2},?\s+\d{4}\b/.test(cur);
     const isYAxisNumber = isRevenueChartYAxis(node) && /^\s*[0-9]+(?:\.[0-9]+)?\s*$/.test(cur);
     const hasTimePattern = /\b\d{1,2}:\d{2}\b/.test(cur);
-    if (!cur.includes("$") && !/[KMB]\b/.test(cur) && !/\b(a\.?m\.?|p\.?m\.?)\b/i.test(cur) && !hasDatePattern && !isYAxisNumber && !hasTimePattern) return;
+    const hasAmPmPattern = /\d{1,2}\s*[ap]\.?m\.?/i.test(cur);
+    if (!cur.includes("$") && !/[KMB]\b/.test(cur) && !hasAmPmPattern && !hasDatePattern && !isYAxisNumber && !hasTimePattern) return;
 
     if (!origText.has(node)) origText.set(node, cur);
     const orig = origText.get(node);
