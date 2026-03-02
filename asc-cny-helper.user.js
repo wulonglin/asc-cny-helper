@@ -312,7 +312,7 @@
     });
 
     FX_RATE = CFG.enableFX ? await getUsdCnyRate() : CFG.fallbackUsdCny;
-    stamp(`USD/CNY=${FX_RATE.toFixed(2)}`);
+    stamp(`ASC OK (USD/CNY=${FX_RATE.toFixed(4)})`);
 
     const mo = new MutationObserver(muts => {
       for (const m of muts) {
