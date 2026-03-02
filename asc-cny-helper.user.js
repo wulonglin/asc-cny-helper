@@ -109,19 +109,25 @@
     return text.replace(re, `${String(h).padStart(2, "0")}:00`);
   }
 
-  function shift24hTime(text) {
+  const shiftedTimeMark = new WeakSet();
+  function shift24hTime(text, node) {
     if (!text) return null;
+    if (shiftedTimeMark.has(node)) return null;
+
     const re = /\b(\d{1,2}):(\d{2})\b/g;
     let changed = false;
 
     const out = text.replace(re, (m0, hh, mm) => {
       let h = parseInt(hh, 10);
       if (!Number.isFinite(h) || h < 0 || h > 23) return m0;
+      // 只转换 0-16 点（UTC时间），避免重复转换已经转换过的时间（8-23点）
+      if (h >= 8 && h <= 23) return m0;
       h = (h + 8) % 24;
       changed = true;
       return `${String(h).padStart(2, "0")}:${mm}`;
     });
 
+    if (changed) shiftedTimeMark.add(node);
     return changed ? out : null;
   }
 
@@ -285,7 +291,7 @@
     const ax = ampmTo24h(out);
     if (ax) out = ax;
 
-    const shifted = shift24hTime(out);
+    const shifted = shift24hTime(out, node);
     if (shifted) out = shifted;
 
     if (out !== cur) node.nodeValue = out;
