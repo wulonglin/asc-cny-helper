@@ -162,13 +162,12 @@
     const date = new Date(Date.UTC(dt.year, dt.month, dt.day, dt.hour, dt.minute));
     date.setUTCHours(date.getUTCHours() + SHIFT_HOURS);
 
-    const y = date.getUTCFullYear();
     const m = date.getUTCMonth() + 1;
     const d = date.getUTCDate();
     const h = String(date.getUTCHours()).padStart(2, "0");
     const min = String(date.getUTCMinutes()).padStart(2, "0");
 
-    return `${y}年${m}月${d}日 ${h}:${min}`;
+    return `${m}月${d}日 ${h}:${min}`;
   }
 
   function convertEnglishDateTimeToChinese(s) {
@@ -320,7 +319,7 @@
     });
 
     FX_RATE = CFG.enableFX ? await getUsdCnyRate() : CFG.fallbackUsdCny;
-    stamp(`ASC OK (USD/CNY=${FX_RATE.toFixed(4)})`);
+    stamp(`USD/CNY=${FX_RATE.toFixed(2)}`);
 
     const mo = new MutationObserver(muts => {
       for (const m of muts) {
