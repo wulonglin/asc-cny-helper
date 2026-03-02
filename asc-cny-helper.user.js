@@ -244,7 +244,8 @@
     const cur = node.nodeValue || "";
     const hasDatePattern = /\b[A-Za-z]{3,4}\s+\d{1,2},?\s+\d{4}\b/.test(cur);
     const isYAxisNumber = isRevenueChartYAxis(node) && /^\s*[0-9]+(?:\.[0-9]+)?\s*$/.test(cur);
-    if (!cur.includes("$") && !/[KMB]\b/.test(cur) && !/\b(a\.?m\.?|p\.?m\.?)\b/i.test(cur) && !hasDatePattern && !isYAxisNumber) return;
+    const hasTimePattern = /\b\d{1,2}:\d{2}\b/.test(cur);
+    if (!cur.includes("$") && !/[KMB]\b/.test(cur) && !/\b(a\.?m\.?|p\.?m\.?)\b/i.test(cur) && !hasDatePattern && !isYAxisNumber && !hasTimePattern) return;
 
     if (!origText.has(node)) origText.set(node, cur);
     const orig = origText.get(node);
