@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AppStoreConnect 汇率时间助手
 // @namespace    https://wulonglin.xyz/
-// @version      1.0.2
+// @version      1.0.3
 // @author       wulonglin
 // @description  AppStoreConnect 趋势页面 USD 自动转 CNY（实时汇率），UTC 时间转北京时间（+8小时），英文日期转中文格式
 // @homepageURL  https://github.com/wulonglin/asc-cny-helper
@@ -26,7 +26,7 @@
     enableFX: true,
     enableKMBExpand: true,
     enable24hAxis: true,
-    fallbackUsdCny: 7.20,
+    fallbackUsdCny: 7.00,
     cnyDigits: 2,
     kmbDigits: 0,
     hoverDebounceMs: 120,
